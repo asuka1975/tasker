@@ -2,7 +2,7 @@ FROM node:21-alpine3.18 AS builder
 
 WORKDIR /opt/builder
 
-COPY index.ts .
+COPY src/ src
 COPY package.json .
 COPY tsconfig.json .
 
