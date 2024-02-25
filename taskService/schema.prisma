@@ -1,0 +1,17 @@
+datasource db {
+    provider = "mysql"
+    url      = env("DATABASE_URL")
+}
+
+model Task {
+    id              Int         @default(autoincrement()) @id
+    title           String
+    description     String
+    priority        Int         @default(0)
+    createdAt       DateTime    @default(now())
+    updatedAt       DateTime    @updatedAt
+    limitAt         DateTime?
+    children        Task[]      @relation("Subtasks")
+    parent          Task?       @relation("Subtasks", fields: [parentId], references: [id])
+    parentId        Int?
+}

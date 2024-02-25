@@ -3,3 +3,15 @@ services:
     build: taskService
     ports:
       - 3000:3000
+
+  db:
+    image: mariadb:11.3.2-jammy
+    restart: always
+    environment:
+      - MARIADB_USER=asuka1975
+      - MARIADB_PASSWORD=4btcAiqNym3Krv3
+      - MARIADB_ROOT_PASSWORD=password
+    volumes:
+      - ./db/sql:/docker-entrypoint-initdb.d
+    ports:
+      - 3306:3306
