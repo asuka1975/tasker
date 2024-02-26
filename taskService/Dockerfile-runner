@@ -1,0 +1,7 @@
+FROM node:21-alpine3.18 AS builder
+
+WORKDIR /opt/app
+
+ENTRYPOINT [ "npx", "dotenv", "-e", ".env", "--", "node", "index.js" ]
+
+EXPOSE 3000

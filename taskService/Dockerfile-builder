@@ -1,0 +1,12 @@
+FROM node:21-alpine3.18 AS builder
+
+WORKDIR /opt/builder
+
+COPY ./ ./
+
+RUN npm i
+
+ENTRYPOINT [ "sh", "-c", "npm run migrate dev \
+    && npm run build \
+    && cp -r /opt/builder/src/generated dist/ \
+    && cp /opt/builder/.env dist/" ]

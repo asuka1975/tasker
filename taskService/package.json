@@ -7,9 +7,9 @@
     "build": "npx tsc",
     "start": "dotenv -e .env -- node dist/index.js",
     "dev": "npx ts-node src/index.ts",
-    "migrate": "dotenv -e .env -- npx prisma migrate",
+    "migrate": "dotenv -e .env -- npx prisma migrate dev --name init",
     "test": "dotenv -e .env.test -- jest",
-    "migrate:test": "dotenv -e .env.test -- npx prisma migrate reset -f"
+    "migrate:test": "dotenv -e .env.test -- npx prisma migrate reset -f && dotenv -e .env.test -- npx prisma migrate dev"
   },
   "keywords": [],
   "author": "",
@@ -27,6 +27,7 @@
   },
   "dependencies": {
     "@prisma/client": "^5.10.2",
+    "dayjs": "^1.11.10",
     "express": "^4.18.2"
   }
 }

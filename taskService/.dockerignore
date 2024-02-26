@@ -1,0 +1,8 @@
+dist/
+node_modules/
+src/generated/
+.dockerignore
+.env.test
+Dockerfile-builder
+Dockerfile-runner
+package-lock.json

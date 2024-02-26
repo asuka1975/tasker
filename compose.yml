@@ -1,6 +1,25 @@
 services:
-  task-service:
-    build: taskService
+  task-service-builder:
+    build: 
+      context: taskService
+      dockerfile: Dockerfile-builder
+    depends_on:
+      db:
+        condition: service_healthy
+    volumes:
+      - node_modules:/opt/builder/node_modules
+      - app:/opt/builder/dist
+  
+  task-service-runner:
+    build:
+      context: taskService
+      dockerfile: Dockerfile-runner
+    depends_on:
+      task-service-builder:
+        condition: service_completed_successfully
+    volumes:
+      - node_modules:/opt/app/node_modules
+      - app:/opt/app
     ports:
       - 3000:3000
 
@@ -15,3 +34,13 @@ services:
       - ./db/sql:/docker-entrypoint-initdb.d
     ports:
       - 3306:3306
+    healthcheck:
+      test: ["CMD", "healthcheck.sh", "--su-mysql", "--connect", "--innodb_initialized"]
+      interval: 1m30s
+      timeout: 30s
+      retries: 5
+      start_period: 30s
+
+volumes:
+  node_modules:
+  app:
