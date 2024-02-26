@@ -12,7 +12,7 @@ export const taskArraySchema = z.array(taskSchema);
 export const taskUpdateSchema = z.object({
     title: z.string().optional(),
     description: z.string().optional(),
-    priority: z.string().optional(),
+    priority: z.number().optional(),
     limitAt: z.coerce.date().optional(),
     parentId: z.number().int().optional()
 });

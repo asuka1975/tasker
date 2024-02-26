@@ -1,5 +1,5 @@
 import express from 'express'
-import { getAllTasksHandler, getChildrenHandler, getRootTasksHandler, getTaskHandler, getTasksHandler, postTask, postTaskToParent } from './handlers/task.handler';
+import { deleteTask, getAllTasksHandler, getChildrenHandler, getRootTasksHandler, getTaskHandler, getTasksHandler, postTask, postTaskToParent, updateTask } from './handlers/task.handler';
 import { TasksRepository } from './repositories/tasks.repository';
 import { PrismaClient } from './generated/prisma/client';
 import { getPrismaClient } from './infrastructure/dbClient';
@@ -22,6 +22,8 @@ async function main() {
     app.get("/api/v1/task/:id/children", getChildrenHandler(tasksRepository));
     app.post("/api/v1/task", postTask(tasksRepository));
     app.post("/api/v1/task/:id", postTaskToParent(tasksRepository));
+    app.put("/api/v1/task/:id", updateTask(tasksRepository));
+    app.delete("/api/v1/task/:id", deleteTask(tasksRepository));
 }
 
 main()

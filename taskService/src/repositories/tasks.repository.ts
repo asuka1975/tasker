@@ -1,5 +1,5 @@
 import { PrismaClient, Task } from "../generated/prisma/client";
-import { TaskInput } from "../schema/taskSchema";
+import { TaskInput, TaskUpdateInput } from "../schema/taskSchema";
 
 export class TasksRepository {
     private readonly client: PrismaClient;
@@ -70,5 +70,22 @@ export class TasksRepository {
                 }
             })
         }).then(payload => payload.count);
+    }
+
+    async updateTask(id: number, task: TaskUpdateInput): Promise<Task> {
+        return await this.client.task.update({
+            where: {
+                id: id
+            },
+            data: task
+        });
+    }
+
+    async deleteTask(id: number): Promise<Task> {
+        return await this.client.task.delete({
+            where: {
+                id: id
+            }
+        });
     }
 };
