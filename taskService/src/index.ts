@@ -1,5 +1,5 @@
 import express from 'express'
-import { getAllTasksHandler } from './handlers/task.handler';
+import { getAllTasksHandler, getChildrenHandler, getRootTasksHandler, getTaskHandler, getTasksHandler, postTask, postTaskToParent } from './handlers/task.handler';
 import { TasksRepository } from './repositories/tasks.repository';
 import { PrismaClient } from './generated/prisma/client';
 import { getPrismaClient } from './infrastructure/dbClient';
@@ -12,13 +12,16 @@ async function main() {
 
     const app: express.Express = express()
     app.use(express.json())
-    app.use(express.urlencoded({ extended: true }))
 
     app.listen(3000, () => {
         console.log("Start on port: 3000")
     });
 
-    app.get("/api/v1/task", getAllTasksHandler(tasksRepository));
+    app.get("/api/v1/task", getTasksHandler(tasksRepository));
+    app.get("/api/v1/task/:id", getTaskHandler(tasksRepository));
+    app.get("/api/v1/task/:id/children", getChildrenHandler(tasksRepository));
+    app.post("/api/v1/task", postTask(tasksRepository));
+    app.post("/api/v1/task/:id", postTaskToParent(tasksRepository));
 }
 
 main()
