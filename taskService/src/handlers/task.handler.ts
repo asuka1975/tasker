@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 import { TasksRepository } from "../repositories/tasks.repository";
-import { taskSchema, TaskInput } from "../schema/taskSchema";
+import { taskSchema, TaskInput, taskArraySchema } from "../schema/taskSchema";
 
 type Handler = (req: Request, res: Response) => void;
 
@@ -99,6 +99,28 @@ export function postTask(tasksRepository: TasksRepository): Handler {
     return (req: Request, res: Response) => {
         try {
             tasksRepository.createTask(taskSchema.parse(req.body))
+                .then(task => {
+                    res.json(task)
+                })
+                .catch(e => {
+                    res.status(500).json({
+                        status: 500,
+                        message: e
+                    })
+                })
+        } catch(e) {
+            res.status(400).json({
+                status: 400,
+                message: `Bad Request ${e}`
+            });
+        }
+    }
+}
+
+export function postTasks(tasksRepository: TasksRepository): Handler {
+    return (req: Request, res: Response) => {
+        try {
+            tasksRepository.createTasks(taskArraySchema.parse(req.body))
                 .then(task => {
                     res.json(task)
                 })

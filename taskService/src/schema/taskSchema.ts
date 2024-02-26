@@ -7,6 +7,8 @@ export const taskSchema = z.object({
     limitAt: z.coerce.date()
 });
 
+export const taskArraySchema = z.array(taskSchema);
+
 export const taskUpdateSchema = z.object({
     title: z.string().optional(),
     description: z.string().optional(),
