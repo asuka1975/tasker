@@ -1,9 +1,9 @@
 type Props = {
-    title: string
+    children: string
 };
 
-export default function Title({ title }: Props) {
+export default function Title({ children }: Props) {
     return (
-        <span className="text-md text-black">{title}</span>
+        <span className="text-md text-black truncate">{children}</span>
     )
 }
