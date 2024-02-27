@@ -1,6 +1,8 @@
 import Image from "next/image";
 import Subtext from "./_components/atom/Subtext";
 import Priority from "./_components/atom/Priority";
+import Marker from "./_components/atom/Marker";
+import Title from "./_components/atom/Title";
 
 export default function Home() {
   return (
@@ -12,6 +14,8 @@ export default function Home() {
             <Priority key={i} priority={i}></Priority>
           )
         })}
+        <Title title="sample" />
+        <Marker />
       </div>
     </main>
   );
