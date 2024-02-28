@@ -7,6 +7,18 @@ import dayjs from "dayjs";
 import LimitWarningIcon from "./_components/atom/LimitWarningIcon";
 import LimitOverIcon from "./_components/atom/LimitOverIcon";
 import LimitInfoIcon from "./_components/atom/LimitInfoIcon";
+import TaskTree from "./_components/organism/TaskTree";
+
+const limits: Date[] = [
+  dayjs().subtract(1, 'd').toDate(),
+  dayjs().add(2, 'd').toDate(),
+  dayjs().add(6, 'd').toDate(),
+  dayjs().add(10, 'd').toDate(),
+  dayjs().add(14, 'd').toDate(),
+  dayjs().add(18, 'd').toDate(),
+  dayjs().add(20, 'd').toDate(),
+  dayjs().add(24, 'd').toDate(),
+]
 
 export default function Home() {
   return (
@@ -29,10 +41,12 @@ export default function Home() {
       <div className="pl-1 w-96">
         {[...Array(8)].map((_, i) => {
           return (
-            <TaskItem title={`sample${i}`.repeat(i + 1)} priority={i} limitAt={new Date()} key={i} />
+            <TaskItem id={i} title={`sample${i}`.repeat(i + 1)} priority={i} limitAt={limits[i]} key={i} />
           )
         })}
-
+      </div>
+      <div className="pl-1 w-96">
+        <TaskTree id={0} title={"sample".repeat(10)} priority={1} limitAt={new Date()} subtasks={[]} />
       </div>
     </main>
   );
