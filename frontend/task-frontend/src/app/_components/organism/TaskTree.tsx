@@ -3,7 +3,6 @@
 import { useState } from "react";
 import Marker from "../atom/Marker";
 import TaskItem from "../molecule/TaskItem";
-import dayjs from "dayjs";
 import { TaskRepository } from "@/app/_domain/repository/TaskRepository";
 
 type Props = {
@@ -17,6 +16,7 @@ type Props = {
 
 export default function TaskTree({ id, title, priority, limitAt, subtasks, taskRepository }: Props) {
     const [opened, setOpened] = useState<boolean>(false);
+    const [subtasks_, _] = useState(subtasks.map(i => getSubtask(i, taskRepository)));
 
     return (
         <div className="">
@@ -28,8 +28,8 @@ export default function TaskTree({ id, title, priority, limitAt, subtasks, taskR
             </div>
             {opened ?
                 <div className="pl-[0.5em]">
-                    {subtasks.map(i => {
-                        return <TaskTree { ...getSubtask(id, taskRepository) } taskRepository={taskRepository} />;
+                    {subtasks_.map(subtask => {
+                        return <TaskTree { ...subtask } taskRepository={taskRepository} />;
                     })}
                 </div>
               : <></>

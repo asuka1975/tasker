@@ -3,7 +3,7 @@ import { Task } from "../types/Task";
 import { TaskRepository } from "./TaskRepository";
 
 function getRandomInt(max: number) {
-    return Math.round(Math.random() * max);
+    return Math.round(Math.random() * max) + 1;
 }
 
 export class MockTaskRepository implements TaskRepository {
@@ -13,9 +13,9 @@ export class MockTaskRepository implements TaskRepository {
             title: `sample${getRandomInt(10)}`.repeat(getRandomInt(5)),
             description: `description${getRandomInt(10)}`,
             priority: getRandomInt(7),
-            createdAt: dayjs(new Date()).subtract(getRandomInt(100)).toDate(),
+            createdAt: dayjs(new Date()).subtract(getRandomInt(100), 'day').toDate(),
             updatedAt: dayjs(new Date()).toDate(),
-            limitAt: dayjs(new Date()).add(getRandomInt(30)).toDate(),
+            limitAt: dayjs(new Date()).add(getRandomInt(50), 'day').toDate(),
         }
     }
     getSubtasks(id: number): Task[] {

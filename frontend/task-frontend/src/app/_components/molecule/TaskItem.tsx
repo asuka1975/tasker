@@ -1,3 +1,5 @@
+"use client"
+
 import dayjs from "dayjs";
 import LimitInfoIcon from "../atom/LimitInfoIcon";
 import Priority from "../atom/Priority";

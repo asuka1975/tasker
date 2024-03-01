@@ -51,7 +51,7 @@ export default function Home() {
         })}
       </div>
       <div className="pl-1 w-96">
-        <TaskTree id={0} title={"sample".repeat(10)} priority={1} limitAt={new Date()} subtasks={[1, 1, 1]} taskRepository={taskRepository} />
+        <TaskTree id={0} title={"sample".repeat(10)} priority={1} limitAt={new Date()} subtasks={[1, 2, 3]} taskRepository={taskRepository} />
       </div>
     </main>
   );
