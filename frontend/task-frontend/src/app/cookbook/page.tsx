@@ -12,6 +12,7 @@ import LimitInfoIcon from "../_components/atom/LimitInfoIcon";
 import TaskTree from "../_components/organism/TaskTree";
 import { MockTaskRepository } from "../_domain/repository/MockTaskRepository";
 import CloseIconButton from "../_components/atom/CloseIconButton";
+import ModalPanel from "../_components/molecule/ModalPanel";
 
 const limits: Date[] = [
   dayjs().subtract(1, 'd').toDate(),
@@ -46,6 +47,12 @@ export default function Home() {
       </div>
 
       <CloseIconButton onClick={() => {}} />
+
+      <div className="bg-black w-96 p-1">
+        <ModalPanel onClose={() => {}}>
+          {"a"}
+        </ModalPanel>
+      </div>
 
       <div className="pl-1 w-96">
         {[...Array(8)].map((_, i) => {

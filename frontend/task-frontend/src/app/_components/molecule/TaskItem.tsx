@@ -32,11 +32,9 @@ export default function TaskItem({ id, title, priority, limitAt }: Props) {
                       : diff < 7 ? <LimitWarningIcon />
                           : <LimitInfoIcon />
                 }
-                <Link href={`/cookbook/task/${id}`}>
-                    <Title>
-                        {title}
-                    </Title>
-                </Link>
+                <Title>
+                    {title}
+                </Title>
                 <Priority priority={priority} />
             </div>
 
