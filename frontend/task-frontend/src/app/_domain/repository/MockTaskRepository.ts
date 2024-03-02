@@ -15,10 +15,10 @@ export class MockTaskRepository implements TaskRepository {
             priority: getRandomInt(7),
             createdAt: dayjs(new Date()).subtract(getRandomInt(100), 'day').toDate(),
             updatedAt: dayjs(new Date()).toDate(),
-            limitAt: dayjs(new Date()).add(getRandomInt(50), 'day').toDate(),
+            limitAt: dayjs(new Date()).add(getRandomInt(50) - 10, 'day').toDate(),
         }
     }
     getSubtasks(id: number): Task[] {
-        return [...Array(getRandomInt(3))].map(_ => this.getTask(getRandomInt(100)))
+        return [...Array(getRandomInt(4) - 1)].map(_ => this.getTask(getRandomInt(100)))
     }
 }
