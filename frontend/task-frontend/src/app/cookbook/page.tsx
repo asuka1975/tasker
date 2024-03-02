@@ -13,6 +13,7 @@ import TaskTree from "../_components/organism/TaskTree";
 import { MockTaskRepository } from "../_domain/repository/MockTaskRepository";
 import CloseIconButton from "../_components/atom/CloseIconButton";
 import ModalPanel from "../_components/molecule/ModalPanel";
+import Link from "next/link";
 
 const limits: Date[] = [
   dayjs().subtract(1, 'd').toDate(),
@@ -53,6 +54,8 @@ export default function Home() {
           {"a"}
         </ModalPanel>
       </div>
+
+      <Link href="/cookbook/task/1">task</Link>
 
       <div className="pl-1 w-96">
         {[...Array(8)].map((_, i) => {
