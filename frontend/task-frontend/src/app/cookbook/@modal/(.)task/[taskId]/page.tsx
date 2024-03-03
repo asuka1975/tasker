@@ -12,11 +12,14 @@ type Props = {
 }
 
 export default function TaskDetailPage({ params }: Props) {
-    const { back } = useRouter();
+    const router = useRouter();
 
     return (
         <Modal>
-            <ModalPanel onClose={back} className="w-[50vw] h-[80vh]">
+            <ModalPanel onClose={() => { 
+                router.push("/cookbook/"); 
+                router.refresh(); 
+                }} className="w-[50vw] h-[80vh]">
                 <TaskDetail id={params.taskId} />
             </ModalPanel>
         </Modal>

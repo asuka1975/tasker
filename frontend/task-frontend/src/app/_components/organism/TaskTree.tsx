@@ -4,6 +4,7 @@ import { useState } from "react";
 import Marker from "../atom/Marker";
 import TaskItem from "../molecule/TaskItem";
 import { TaskRepository } from "@/app/_domain/repository/TaskRepository";
+import MenuIconButton from "../atom/MenuIconButton";
 
 type Props = {
     id: number;
@@ -20,11 +21,12 @@ export default function TaskTree({ id, title, priority, limitAt, subtasks, taskR
 
     return (
         <div className="">
-            <div className="grid grid-cols-[0.5em_1fr] items-center gap-2" onClick={() => { setOpened(v => !v) }}>
-                { subtasks.length > 0 ? <div className={opened ? "transition rotate-90 duration-100" : ""}><Marker /></div> : <></> }
+            <div className="grid grid-cols-[0.5em_1fr_0.5em] items-center gap-2">
+                { subtasks.length > 0 ? <div className={opened ? "transition rotate-90 duration-100" : ""} onClick={() => { setOpened(v => !v) }}><Marker /></div> : <></> }
                 <div className="col-start-2">
                     <TaskItem id={id} title={title} priority={priority} limitAt={limitAt}></TaskItem>
                 </div>
+                <MenuIconButton className="w-6 h-6" />
             </div>
             {opened ?
                 <div className="transition pl-[0.5em] duration-100">

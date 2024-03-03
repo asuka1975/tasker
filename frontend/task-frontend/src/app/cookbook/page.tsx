@@ -47,7 +47,7 @@ export default function Home() {
         <LimitOverIcon />
       </div>
 
-      <CloseIconButton onClick={() => {}} />
+      <CloseIconButton className="p-2" onClick={() => {}} />
 
       <div className="bg-black w-96 p-1">
         <ModalPanel onClose={() => {}}>
