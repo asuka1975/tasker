@@ -1,10 +1,12 @@
 "use client"
 
-import { useState } from "react";
+import { useRef, useState } from "react";
 import Marker from "../atom/Marker";
 import TaskItem from "../molecule/TaskItem";
 import { TaskRepository } from "@/app/_domain/repository/TaskRepository";
 import MenuIconButton from "../atom/MenuIconButton";
+import ContextMenu from "../molecule/ContextMenu";
+import MenuItem from "../atom/MenuItem";
 
 type Props = {
     id: number;
@@ -18,6 +20,7 @@ type Props = {
 export default function TaskTree({ id, title, priority, limitAt, subtasks, taskRepository }: Props) {
     const [opened, setOpened] = useState<boolean>(false);
     const [subtasks_, _] = useState(subtasks.map(i => getSubtask(i, taskRepository)));
+    const [menuOpened, setMenuOpened] = useState<boolean>(false);
 
     return (
         <div className="">
@@ -26,7 +29,18 @@ export default function TaskTree({ id, title, priority, limitAt, subtasks, taskR
                 <div className="col-start-2">
                     <TaskItem id={id} title={title} priority={priority} limitAt={limitAt}></TaskItem>
                 </div>
-                <MenuIconButton className="w-6 h-6" />
+                <div>
+                    <MenuIconButton className="w-6 h-6" onClick={() => { setMenuOpened(v => !v) }} />
+                    {
+                        menuOpened ?
+                            <ContextMenu className="absolute" close={() => setMenuOpened(false)} tabIndex={0}>
+                                <MenuItem name="sample1" action={() => {}} />
+                                <MenuItem name="sample2" action={() => {}} />
+                                <MenuItem name="sample3" action={() => {}} />
+                            </ContextMenu>
+                          : null
+                    }
+                </div>
             </div>
             {opened ?
                 <div className="transition pl-[0.5em] duration-100">
