@@ -34,9 +34,8 @@ export default function TaskTree({ id, title, priority, limitAt, subtasks, taskR
                     {
                         menuOpened ?
                             <ContextMenu className="absolute" close={() => setMenuOpened(false)} tabIndex={0}>
-                                <MenuItem name="sample1" action={() => {}} />
-                                <MenuItem name="sample2" action={() => {}} />
-                                <MenuItem name="sample3" action={() => {}} />
+                                <MenuItem name="追加" action={() => {}} />
+                                <MenuItem name="削除" action={() => {}} />
                             </ContextMenu>
                           : null
                     }
