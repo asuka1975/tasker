@@ -11,6 +11,9 @@ import DateTimeView from "../atom/DateTimeView";
 import dayjs from "dayjs";
 import AddIconButton from "../atom/AddIconButton";
 import Button from "../atom/Button";
+import ComponentWithLabel from "../molecule/ComponentWithLabel";
+import PriorityView from "../atom/PriorityView";
+import PriorityInput from "../atom/PriorityInput";
 
 type Props = {
     id: number
@@ -47,18 +50,10 @@ export default async function TaskDetail({ id }: Props) {
                     </div>
                 </div>
                 <div className="flex flex-col gap-2 border-gray-300 border-[1px] rounded-md p-4">
-                    <div className="grid grid-cols-[1fr_2fr]">
-                        <Subtext>作成日</Subtext>
-                        <DateTimeView>{dayjs()}</DateTimeView>
-                    </div>
-                    <div className="grid grid-cols-[1fr_2fr]">
-                        <Subtext>編集日</Subtext>
-                        <DateTimeView>{dayjs()}</DateTimeView>
-                    </div>
-                    <div className="grid grid-cols-[1fr_2fr]">
-                        <Subtext>期限</Subtext>
-                        <DateTimeInput />
-                    </div>
+                    <ComponentWithLabel label="作成日"><DateTimeView>{dayjs()}</DateTimeView></ComponentWithLabel>
+                    <ComponentWithLabel label="編集日"><DateTimeView>{dayjs()}</DateTimeView></ComponentWithLabel>
+                    <ComponentWithLabel label="期限"><DateTimeInput/></ComponentWithLabel>
+                    <ComponentWithLabel label="優先度"><PriorityInput priority={task.priority} onChange={(p) => {}} /></ComponentWithLabel>
                 </div>
             </div>
         </div>

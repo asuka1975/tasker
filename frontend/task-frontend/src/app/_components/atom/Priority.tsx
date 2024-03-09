@@ -4,7 +4,7 @@ type Props = {
     priority: number
 };
 
-const statusColors = [
+export const statusColors = [
     "bg-gray-300",
     "bg-blue-300",
     "bg-cyan-300",
