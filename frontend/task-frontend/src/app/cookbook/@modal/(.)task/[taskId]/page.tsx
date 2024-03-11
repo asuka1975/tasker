@@ -3,7 +3,9 @@
 import ModalPanel from "@/app/_components/molecule/ModalPanel";
 import Modal from "@/app/_components/organism/Modal";
 import TaskDetail from "@/app/_components/organism/TaskDetail";
+import { mockTaskRepository } from "@/app/_domain/repository/MockTaskRepository";
 import { useRouter } from "next/navigation";
+import { useState } from "react";
 
 type Props = {
     params: {
