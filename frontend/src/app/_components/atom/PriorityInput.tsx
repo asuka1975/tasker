@@ -16,7 +16,7 @@ export default function PriorityInput({ priority, onChange }: Props) {
             {
                 statusColors
                     .map((v, i) => i <= priorityValue ? statusColors[priorityValue] : "")
-                    .map((v, i) => <div className={`${v} hover:${calcHoverColor(v)}`} onClick={() => {
+                    .map((v, i) => <div key={i} className={`${v} hover:${calcHoverColor(v)}`} onClick={() => {
                         setPriorityValue(i)
                         onChange(i);
                     }} />)
