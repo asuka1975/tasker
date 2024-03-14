@@ -2,6 +2,6 @@ type Props = {
 
 }
 
-export default function({}: Props) {
+export default function Page({}: Props) {
     return <></>
 }

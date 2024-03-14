@@ -7,8 +7,8 @@ services:
       db:
         condition: service_healthy
     volumes:
-      - node_modules:/opt/builder/node_modules
-      - app:/opt/builder/dist
+      - node_modules_server:/opt/builder/node_modules
+      - app_server:/opt/builder/dist
   
   task-service-runner:
     build:
@@ -18,10 +18,33 @@ services:
       task-service-builder:
         condition: service_completed_successfully
     volumes:
-      - node_modules:/opt/app/node_modules
-      - app:/opt/app
+      - node_modules_server:/opt/app/node_modules
+      - app_server:/opt/app
+    expose:
+      - 3000
+
+  frontend-builder:
+    build:
+      context: frontend
+      dockerfile: Dockerfile-builder
+    volumes:
+      - next:/opt/builder/.next
+      - node_modules_frontend:/opt/builder/node_modules
+    depends_on:
+      - task-service-runner
+    
+  frontend-runner:
+    build:
+      context: frontend
+      dockerfile: Dockerfile-runner
     ports:
       - 3000:3000
+    volumes:
+      - next:/opt/app/.next
+      - node_modules_frontend:/opt/app/node_modules
+    depends_on:
+      frontend-builder:
+        condition: service_completed_successfully
 
   db:
     image: mariadb:11.3.2-jammy
@@ -42,5 +65,7 @@ services:
       start_period: 30s
 
 volumes:
-  node_modules:
-  app:
+  node_modules_server:
+  app_server:
+  next:
+  node_modules_frontend:

@@ -10,7 +10,7 @@ export default function PriorityView({ priority }: Props) {
             {
                 statusColors
                     .map((v, i) => i <= priority ? statusColors[priority] : "")
-                    .map(v => <div className={`${v}`} />)
+                    .map((v, i) => <div key={i} className={`${v}`} />)
             }
         </div>
     )

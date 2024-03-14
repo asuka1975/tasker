@@ -7,7 +7,8 @@
     "build": "npx tsc",
     "start": "dotenv -e .env -- node dist/index.js",
     "dev": "npx ts-node src/index.ts",
-    "migrate": "dotenv -e .env -- npx prisma migrate dev --name init",
+    "generate": "dotenv -e .env -- npx prisma generate",
+    "migrate": "dotenv -e .env -- npx prisma migrate deploy",
     "test": "dotenv -e .env.test -- jest",
     "migrate:test": "dotenv -e .env.test -- npx prisma migrate reset -f && dotenv -e .env.test -- npx prisma migrate dev"
   },

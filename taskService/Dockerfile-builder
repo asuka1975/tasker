@@ -8,7 +8,8 @@ RUN npm i
 
 COPY ./ ./
 
-ENTRYPOINT [ "sh", "-c", "npm run migrate dev \
+ENTRYPOINT [ "sh", "-c", "npm run generate \
+    && npm run migrate \
     && npm run build \
     && cp -r /opt/builder/src/generated dist/ \
     && cp /opt/builder/.env dist/" ]
