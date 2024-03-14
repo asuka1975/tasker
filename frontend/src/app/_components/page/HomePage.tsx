@@ -12,6 +12,7 @@ import CloseIconButton from "../../_components/atom/CloseIconButton";
 import ModalPanel from "../../_components/molecule/ModalPanel";
 import Link from "next/link";
 import { Task, taskArraySchema, taskSchema } from "../../_domain/types/Task";
+import Header from "../organism/Header";
 
 const limits: Date[] = [
     dayjs().subtract(1, 'd').toDate(),
@@ -35,6 +36,7 @@ export default async function HomePage() {
 
     return (
         <main>
+            <Header />
             <div className="pl-1 w-96">
                 {
                     rootTasks.map((task) => (
