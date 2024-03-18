@@ -20,7 +20,7 @@ export default function TaskItem({ id, title, priority, limitAt, completed }: Pr
     const diff = dayjs(limitAt).diff(now, 'day');
 
     return (
-        <Link href={`/cookbook/task/${id}`}>
+        <Link href={`/task/${id}`}>
             {
                 (now.isBefore(limitAt) && diff >= 14) ?
                     <div className="grid grid-cols-[1fr_0.5rem] items-center gap-2">

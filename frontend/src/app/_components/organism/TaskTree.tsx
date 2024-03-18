@@ -66,14 +66,14 @@ export default function TaskTree({ id, title, priority, limitAt, completed, subt
 }
 
 async function getSubtask(taskId: number) {
-    const task = await fetch(`/api/v1/cookbook/task/${taskId}`, { 
+    const task = await fetch(`http://task-service-runner:3000/api/v1/task/${taskId}`, { 
         next: {
             revalidate: 20
         }
     })
     .then(r => r.json())
     .then(j => taskSchema.parse(j))
-    const subtasks = await fetch(`/api/v1/cookbook/task/${taskId}/children`, {
+    const subtasks = await fetch(`http://task-service-runner:3000/api/v1/task/${taskId}/children`, {
         next: {
             revalidate: 20
         }
