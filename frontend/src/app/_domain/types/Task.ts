@@ -12,5 +12,15 @@ export const taskSchema = z.object({
 })
 export const taskArraySchema = z.array(taskSchema);
 
+
+export const taskInputSchema = z.object({
+    title: z.string(),
+    description: z.string(),
+    priority: z.number().min(0, "優先度は０より小さくできません").max(8, "優先度は８より大きくできません"),
+    limitAt: z.coerce.date(),
+})
+
+export type TaskInput = z.infer<typeof taskInputSchema>;
+
 export type Task = z.infer<typeof taskSchema>;
 export type TaskArray = z.infer<typeof taskArraySchema>;
