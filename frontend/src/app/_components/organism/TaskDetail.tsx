@@ -1,4 +1,4 @@
-
+"use client"
 
 import { Task, taskArraySchema, taskSchema } from "@/app/_domain/types/Task"
 import Heading2 from "../atom/Heading2";
@@ -15,12 +15,11 @@ import PriorityInput from "../atom/PriorityInput";
 import CompletedHeading1 from "../atom/CompletedHeading1";
 
 type Props = {
-    id: number;
+    task: Task;
+    subtasks: Task[];
 }
 
-export default async function TaskDetail({ id }: Props) {
-    const task = await getTaskDetail(id);
-    const subtasks = await getTaskChildren(id);
+export default async function TaskDetail({ task, subtasks }: Props) {
 
     return (
         <div className="flex flex-col w-full h-full">
@@ -63,28 +62,4 @@ export default async function TaskDetail({ id }: Props) {
             </div>
         </div>
     )
-}
-
-async function getTaskDetail(id: number): Promise<Task> {
-    const task = await fetch(`/api/v1/cookbook/task/${id}`, {
-        next: {
-            revalidate: 20
-        }
-    })
-    .then(r => r.json())
-    .then(j => taskSchema.parse(j))
-
-    return task;
-}
-
-async function getTaskChildren(id: number): Promise<Task[]> {
-    const tasks = await fetch(`/api/v1/cookbook/task/${id}/children`, {
-        next: {
-            revalidate: 20
-        }
-    })
-    .then(r => r.json())
-    .then(j => taskArraySchema.parse(j))
-
-    return tasks;
 }

@@ -5,6 +5,7 @@ import { TaskInput } from '@/app/_domain/types/Task';
 import { useFormState } from 'react-dom';
 import Label from '../atom/Label';
 import Button from '../atom/Button';
+import CloseLinkIconButton from '../atom/CloseLinkIconButton';
 
 type Props = {
 };
@@ -48,6 +49,7 @@ export default function TaskFrom({ }: Props) {
                 <Button type="submit">
                     追加
                 </Button>
+                <CloseLinkIconButton href="/"></CloseLinkIconButton>
             </div>
         </form>
     )

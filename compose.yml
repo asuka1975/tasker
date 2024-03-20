@@ -63,6 +63,9 @@ services:
       timeout: 30s
       retries: 5
       start_period: 30s
+  curl:
+    image: curlimages/curl:latest
+    entrypoint: tail -f /dev/null
 
 volumes:
   node_modules_server:
