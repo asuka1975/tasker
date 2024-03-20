@@ -49,7 +49,6 @@ export default function TaskFrom({ }: Props) {
                 <Button type="submit">
                     追加
                 </Button>
-                <CloseLinkIconButton href="/"></CloseLinkIconButton>
             </div>
         </form>
     )
