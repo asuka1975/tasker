@@ -17,7 +17,7 @@ export default function TaskItemContextMenu({ id }: Props) {
 
 
     return (
-        <div>
+        <div className="flex items-center w-6 h-full">
             <MenuIconButton className="w-6 h-6" onClick={() => { setMenuOpened(v => !v) }} />
             {
                 menuOpened ?
