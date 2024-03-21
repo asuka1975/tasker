@@ -20,7 +20,15 @@ export const taskInputSchema = z.object({
     limitAt: z.coerce.date(),
 })
 
+export const taskUpdateSchema = z.object({
+    title: z.string().optional(),
+    description: z.string().optional(),
+    priority: z.number().min(0, "優先度は０より小さくできません").max(8, "優先度は８より大きくできません").optional(),
+    limitAt: z.coerce.date().optional(),
+})
+
 export type TaskInput = z.infer<typeof taskInputSchema>;
+export type TaskUpdate = z.infer<typeof taskUpdateSchema>;
 
 export type Task = z.infer<typeof taskSchema>;
 export type TaskArray = z.infer<typeof taskArraySchema>;
