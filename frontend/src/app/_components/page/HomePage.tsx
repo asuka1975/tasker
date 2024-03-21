@@ -49,7 +49,7 @@ export default async function HomePage() {
 }
 
 async function getRootTasks() {
-    const rootTasks = await fetch(`http://task-service-runner:3000/api/v1/task?rootOnly=true`, {
+    const rootTasks = await fetch(`http://task-service-runner:3000/api/v1/task?onlyRoot=true`, {
         next: {
             revalidate: 20
         }
