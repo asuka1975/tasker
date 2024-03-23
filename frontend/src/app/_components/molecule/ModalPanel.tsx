@@ -14,7 +14,7 @@ export default function ModalPanel({ children, closeLink, className = "" }: Prop
     return (
         <div className="grid grid-cols-[1fr_2em] grid-rows-[2em_1fr] bg-white rounded-lg p-8 gap-4">
             <div className="col-start-2 row-start-1">
-                <CloseLinkIconButton className="p-2 w-full h-full" href={closeLink} />
+                <CloseLinkIconButton className="p-2" href={closeLink} />
             </div>
             <div className="col-span-2 row-start-2">
                 <div className={className}>

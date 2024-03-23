@@ -13,6 +13,7 @@ import Button from "../atom/Button";
 import ComponentWithLabel from "../molecule/ComponentWithLabel";
 import PriorityInput from "../atom/PriorityInput";
 import CompletedHeading1 from "../atom/CompletedHeading1";
+import AddLinkIconButton from "../atom/AddIconLinkButton";
 
 type Props = {
     task: Task;
@@ -42,7 +43,7 @@ export default async function TaskDetail({ task, subtasks }: Props) {
                         <div className="grid grid-cols-[1fr_3rem]">
                             <Heading2>子タスク一覧</Heading2>
                             <div>
-                                <AddIconButton className="p-2" />
+                                <AddLinkIconButton className="p-2" href={`/task/${task.id}/create`} />
                             </div>
                         </div>
                         <div className="grid divide-y px-2 shadow-md rounded-md shadow-gray-200 divide-gray-200">
