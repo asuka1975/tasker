@@ -1,3 +1,5 @@
+import BackLinkButton from "@/app/_components/molecule/BackLinkButton"
+import Header from "@/app/_components/organism/Header"
 import TaskDetailSsr from "@/app/_components/organism/TaskDetailSsr"
 
 type Props = {
@@ -8,8 +10,15 @@ type Props = {
 
 export default function Page({ params }: Props) {
     return (
-        <div className="w-screen h-screen px-[20%]">
-            <div className="h-screen py-4">
+        <div className="flex flex-col w-screen h-screen">
+            <Header>
+                <div className="inline-block">
+                    <BackLinkButton className="col-start-1" href="/">
+                        ホーム
+                    </BackLinkButton>
+                </div>
+            </Header>
+            <div className="grow py-4 px-[20%]">
                 <TaskDetailSsr id={params.taskId} />
             </div>
         </div>

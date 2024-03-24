@@ -7,7 +7,7 @@ type Props = {
 
 export default function Header({ children }: Props) {
     return (
-        <div className="grid grid-cols-[5rem_1fr_5rem] gap-4 p-4 mb-4 w-full shadow-md shadow-gray-500">
+        <div className="grid grid-cols-[10rem_1fr_10rem] gap-4 p-4 mb-4 w-full shadow-md shadow-gray-500">
             {children}
         </div>
     )
