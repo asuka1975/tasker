@@ -27,7 +27,7 @@ export default async function TaskDetail({ task, subtasks }: Props) {
             <div className="mb-8">
                 {
                     !task?.completed ?
-                        <EditableTitle onSave={() => {}} title={task?.title} />
+                        <EditableTitle onSave={(title: string) => {updateTask(task.id, { title: title })}} title={task?.title} />
                       : <CompletedHeading1>{task?.title}</CompletedHeading1>
                 }
             </div>
@@ -36,7 +36,7 @@ export default async function TaskDetail({ task, subtasks }: Props) {
                     <div className="flex flex-col">
                         <Heading2>説明</Heading2>
                         <div className="grow">
-                            <EditableText onSave={() => {}} content={task?.description} />
+                            <EditableText onSave={(description: string) => { updateTask(task.id, { description: description }) }} content={task?.description} />
                         </div>
                     </div>
                     <div>
@@ -58,9 +58,19 @@ export default async function TaskDetail({ task, subtasks }: Props) {
                     <ComponentWithLabel label="作成日"><DateTimeView>{dayjs()}</DateTimeView></ComponentWithLabel>
                     <ComponentWithLabel label="編集日"><DateTimeView>{dayjs()}</DateTimeView></ComponentWithLabel>
                     <ComponentWithLabel label="期限"><DateTimeInput/></ComponentWithLabel>
-                    <ComponentWithLabel label="優先度"><PriorityInput priority={task?.priority} onChange={(p) => {}} /></ComponentWithLabel>
+                    <ComponentWithLabel label="優先度"><PriorityInput priority={task?.priority} onChange={(p: number) => { updateTask(task.id, { priority: p }) }} /></ComponentWithLabel>
                 </div>
             </div>
         </div>
     )
+}
+
+async function updateTask(id: number, task: { title?: string; description?: string; limitAt?: Date; priority?: number }) {
+    await fetch(`/api/v1/task/${id}`, {
+        method: "PUT",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify(task)
+    })
 }

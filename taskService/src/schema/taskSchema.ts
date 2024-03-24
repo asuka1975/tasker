@@ -14,7 +14,7 @@ export const taskUpdateSchema = z.object({
     description: z.string().optional(),
     priority: z.number().optional(),
     limitAt: z.coerce.date().optional(),
-    completed: z.boolean(),
+    completed: z.boolean().optional(),
     parentId: z.number().int().optional()
 });
 

@@ -73,6 +73,7 @@ export class TasksRepository {
     }
 
     async updateTask(id: number, task: TaskUpdateInput): Promise<Task> {
+        console.log(id, task)
         return await this.client.task.update({
             where: {
                 id: id
