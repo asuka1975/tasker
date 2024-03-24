@@ -14,6 +14,7 @@ import ComponentWithLabel from "../molecule/ComponentWithLabel";
 import PriorityInput from "../atom/PriorityInput";
 import CompletedHeading1 from "../atom/CompletedHeading1";
 import AddLinkIconButton from "../atom/AddIconLinkButton";
+import { useRouter } from "next/navigation";
 
 type Props = {
     task: Task;
@@ -21,6 +22,7 @@ type Props = {
 }
 
 export default async function TaskDetail({ task, subtasks }: Props) {
+    const router = useRouter();
 
     return (
         <div className="flex flex-col w-full h-full">
@@ -51,13 +53,17 @@ export default async function TaskDetail({ task, subtasks }: Props) {
                         </div>
                     </div>
                     <div>
-                        <Button>完了</Button>
+                        <Button onClick={() => {
+                            updateTask(task.id, { completed: !task.completed })
+                            router.push("/");
+                            router.refresh();
+                        }}>{!task.completed ? "完了" : "再オープン"}</Button>
                     </div>
                 </div>
                 <div className="flex flex-col gap-2 border-gray-300 border-[1px] rounded-md p-4">
-                    <ComponentWithLabel label="作成日"><DateTimeView>{dayjs()}</DateTimeView></ComponentWithLabel>
-                    <ComponentWithLabel label="編集日"><DateTimeView>{dayjs()}</DateTimeView></ComponentWithLabel>
-                    <ComponentWithLabel label="期限"><DateTimeInput/></ComponentWithLabel>
+                    <ComponentWithLabel label="作成日"><DateTimeView>{dayjs(task.createdAt)}</DateTimeView></ComponentWithLabel>
+                    <ComponentWithLabel label="編集日"><DateTimeView>{dayjs(task.updatedAt)}</DateTimeView></ComponentWithLabel>
+                    <ComponentWithLabel label="期限"><DateTimeInput datetime={task.limitAt} onChange={(datetime) => updateTask(task.id, { limitAt: datetime.toDate() })}/></ComponentWithLabel>
                     <ComponentWithLabel label="優先度"><PriorityInput priority={task?.priority} onChange={(p: number) => { updateTask(task.id, { priority: p }) }} /></ComponentWithLabel>
                 </div>
             </div>
@@ -65,7 +71,7 @@ export default async function TaskDetail({ task, subtasks }: Props) {
     )
 }
 
-async function updateTask(id: number, task: { title?: string; description?: string; limitAt?: Date; priority?: number }) {
+async function updateTask(id: number, task: { title?: string; description?: string; limitAt?: Date; priority?: number, completed?: boolean }) {
     await fetch(`/api/v1/task/${id}`, {
         method: "PUT",
         headers: {

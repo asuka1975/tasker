@@ -70,14 +70,14 @@ export default function TaskTree({ id, title, priority, limitAt, completed, subt
 async function getSubtask(taskId: number) {
     const task = await fetch(`/api/v1/task/${taskId}`, { 
         next: {
-            revalidate: 20
+            revalidate: 0
         }
     })
     .then(r => r.json())
     .then(j => taskSchema.parse(j))
     const subtasks = await fetch(`/api/v1/task/${taskId}/children`, {
         next: {
-            revalidate: 20
+            revalidate: 0
         }
     })
     .then(r => r.json())

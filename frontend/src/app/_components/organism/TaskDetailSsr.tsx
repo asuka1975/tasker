@@ -29,7 +29,7 @@ export default async function TaskDetailSsr({ id }: Props) {
 async function getTaskDetail(id: number): Promise<Task> {
     const task = await fetch(`http://task-service-runner:3000/api/v1/task/${id}`, {
         next: {
-            revalidate: 20
+            revalidate: 0
         }
     })
     .then(r => r.json())
@@ -41,7 +41,7 @@ async function getTaskDetail(id: number): Promise<Task> {
 async function getTaskChildren(id: number): Promise<Task[]> {
     const tasks = await fetch(`http://task-service-runner:3000/api/v1/task/${id}/children`, {
         next: {
-            revalidate: 20
+            revalidate: 0
         }
     })
     .then(r => r.json())

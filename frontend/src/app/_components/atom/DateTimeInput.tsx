@@ -7,15 +7,20 @@ import TimeIcon from "./TimeIcon";
 import DateTimeView from "./DateTimeView";
 
 type Props = {
-
+    onChange: (datetime: dayjs.Dayjs) => void
+    datetime: Date
 }
 
-export default function DateTimeInput({}: Props) {
-    const [datetime, setDatetime] = useState<dayjs.Dayjs>(dayjs());
+export default function DateTimeInput({onChange, datetime}: Props) {
+    const [datetime_, setDatetime] = useState<dayjs.Dayjs>(dayjs(datetime));
 
     return (
         <div>
-            <input type="datetime-local" onChange={e => setDatetime(dayjs(e.target.value))} value={datetime.format('YYYY-MM-DDTHH:mm')}></input>
+            <input type="datetime-local" onChange={e => {
+                const datetime = dayjs(e.target.value)
+                onChange(datetime)
+                setDatetime(datetime)
+            }} value={datetime_.format('YYYY-MM-DDTHH:mm')}></input>
         </div>
     )
 }

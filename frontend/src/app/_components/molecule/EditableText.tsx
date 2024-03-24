@@ -16,7 +16,7 @@ export default function EditableText({ content, onSave }: Props) {
     return (
         !editable ?
             <div className="transition duration-200 rounded-lg border-white border-2 hover:border-black h-full" onClick={() => { setEditable(true) }}>
-                {content}
+                {editValue}
             </div>
           : <div className="flex flex-col h-full gap-2">
                 <div className="flex grow self-stretch">
@@ -26,6 +26,7 @@ export default function EditableText({ content, onSave }: Props) {
                     <Button className="" onClick={() => {
                         onSave(editValue);
                         setEditable(false);
+                        setEditValue(editValue);
                     }}>保存</Button>
                 </div>
             </div>
