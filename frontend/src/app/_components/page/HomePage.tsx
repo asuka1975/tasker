@@ -13,6 +13,7 @@ import ModalPanel from "../../_components/molecule/ModalPanel";
 import Link from "next/link";
 import { Task, taskArraySchema, taskSchema } from "../../_domain/types/Task";
 import Header from "../organism/Header";
+import LinkButton from "../atom/LinkButton";
 
 const limits: Date[] = [
     dayjs().subtract(1, 'd').toDate(),
@@ -36,7 +37,9 @@ export default async function HomePage() {
 
     return (
         <main>
-            <Header />
+            <Header>
+                <LinkButton href="/task/create" className="col-start-3">追加</LinkButton>
+            </Header>
             <div className="pl-1 w-96">
                 {
                     rootTasks.map((task) => (

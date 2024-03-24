@@ -1,8 +1,8 @@
 import { ComponentProps, MouseEvent } from "react"
 import IconButton from "./IconButton"
-import LinkIconButton from "./LinkIconButton"
+import LinkIconButton, { LinkIconButtonProps } from "./LinkIconButton"
 
-type Props = ComponentProps<"a">
+type Props = LinkIconButtonProps;
 
 export default function AddLinkIconButton({ ...props }: Props) {
     return (
