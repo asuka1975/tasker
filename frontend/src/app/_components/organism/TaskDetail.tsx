@@ -15,6 +15,7 @@ import PriorityInput from "../atom/PriorityInput";
 import CompletedHeading1 from "../atom/CompletedHeading1";
 import AddLinkIconButton from "../atom/AddIconLinkButton";
 import { useRouter } from "next/navigation";
+import EditableMarkdown from "../molecule/EditableMarkdown";
 
 type Props = {
     task: Task;
@@ -38,7 +39,7 @@ export default async function TaskDetail({ task, subtasks }: Props) {
                     <div className="flex flex-col">
                         <Heading2>説明</Heading2>
                         <div className="grow">
-                            <EditableText onSave={(description: string) => { updateTask(task.id, { description: description }) }} content={task?.description} />
+                            <EditableMarkdown onSave={(description: string) => { updateTask(task.id, { description: description }) }} content={task?.description} />
                         </div>
                     </div>
                     <div>
