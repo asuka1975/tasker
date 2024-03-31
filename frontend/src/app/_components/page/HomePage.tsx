@@ -14,6 +14,7 @@ import Link from "next/link";
 import { Task, taskArraySchema, taskSchema } from "../../_domain/types/Task";
 import Header from "../organism/Header";
 import LinkButton from "../atom/LinkButton";
+import TaskBoard from "../organism/TaskBoard";
 
 const limits: Date[] = [
     dayjs().subtract(1, 'd').toDate(),
@@ -41,11 +42,7 @@ export default async function HomePage() {
                 <LinkButton href="/task/create" className="col-start-3">追加</LinkButton>
             </Header>
             <div className="pl-1 w-96">
-                {
-                    rootTasks.map((task) => (
-                        <TaskTree id={task.id} title={task.title} priority={task.priority} limitAt={task.limitAt} completed={task.completed} subtasks={subtasks?.get(task.id) ?? []} key={task.id} />
-                    ))
-                }
+                <TaskBoard rootTasks={rootTasks} subtasks={subtasks} />
             </div>
         </main>
     );

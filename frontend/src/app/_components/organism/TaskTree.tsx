@@ -2,7 +2,6 @@
 
 import { useEffect, useRef, useState } from "react";
 import Marker from "../atom/Marker";
-import TaskItem from "../molecule/TaskItem";
 import { TaskRepository } from "@/app/_domain/repository/TaskRepository";
 import MenuIconButton from "../atom/MenuIconButton";
 import ContextMenu from "../molecule/ContextMenu";
@@ -10,6 +9,8 @@ import MenuItem from "../atom/MenuItem";
 import { z } from "zod";
 import { taskArraySchema, taskSchema } from "@/app/_domain/types/Task";
 import TaskItemContextMenu from "./TaskItemContextMenu";
+import { useDrop } from "react-dnd";
+import DraggableTaskItem from "./DraggableTaskItem";
 
 const taskDtoSchema = z.object({
     id: z.number(),
@@ -35,25 +36,53 @@ export default function TaskTree({ id, title, priority, limitAt, completed, subt
     const [opened, setOpened] = useState<boolean>(false);
     const [subtasks_, setSubtasks] = useState<z.infer<typeof taskDtoArraySchema>>([]);
 
+    const [{ isOver }, drop] = useDrop(() => ({
+        accept: "task",
+        drop: () => { console.log(id) },
+        collect: monitor => ({
+            isOver: !!monitor.isOver()
+        })
+    }), [id])
+
+    const [{ isTaskHover }, dummyDrop] = useDrop(() => ({
+        accept: "task",
+        drop: () => { },
+        collect: monitor => ({
+            isTaskHover: !!monitor.isOver()
+        })
+    }), [id])
+
     useEffect(() => {
-        console.log(opened)
         if(opened) {
             getSubtasks(subtasks)
                 .then((tasks: any) => {
-                    console.log(tasks)
                     setSubtasks(tasks)
                 })
         }
     }, [opened])
 
+    useEffect(() => {
+        const deferedOpen = async () => {
+            if(!isTaskHover) return;
+            await new Promise(resolve => setTimeout(resolve, 1000));
+            if(isTaskHover) {
+                setOpened(true);
+            }
+        }
+        deferedOpen();
+    }, [isTaskHover])
+
     return (
         <div className="">
-            <div className="grid grid-cols-[0.5em_1fr_0.5em] items-center gap-2">
+            <div className="grid grid-cols-[0.5em_1fr_0.5em] items-center gap-2" >
                 { subtasks.length > 0 ? <div className={opened ? "transition rotate-90 duration-100" : ""} onClick={() => { setOpened(v => !v) }}><Marker /></div> : <></> }
-                <div className="col-start-2">
-                    <TaskItem id={id} title={title} priority={priority} limitAt={limitAt} completed={completed}></TaskItem>
+                <div className="col-start-2" ref={dummyDrop}>
+                    <DraggableTaskItem id={id} title={title} priority={priority} limitAt={limitAt} completed={completed}></DraggableTaskItem>
                 </div>
                 <TaskItemContextMenu id={id} />
+            </div>
+            <div ref={drop} className={`w-full h-1 ${isOver ? "bg-gray-200" : "bg-white"}`}>
+
             </div>
             {opened ?
                 <div className="transition pl-[0.5em] duration-100">
