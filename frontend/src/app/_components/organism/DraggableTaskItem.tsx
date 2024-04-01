@@ -12,6 +12,7 @@ type Props = {
 export default function DraggableTaskItem(props: Props) {
     const [{isDragging}, drag] = useDrag(() => ({
         type: "task",
+        item: { id: props.id },
         collect: monitor => ({
             isDragging: !!monitor.isDragging(),
         })

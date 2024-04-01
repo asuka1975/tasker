@@ -36,12 +36,13 @@ export default function TaskTree({ id, title, priority, limitAt, completed, subt
     const [opened, setOpened] = useState<boolean>(false);
     const [subtasks_, setSubtasks] = useState<z.infer<typeof taskDtoArraySchema>>([]);
 
-    const [{ isOver }, drop] = useDrop(() => ({
+    const [{ isOver }, drop] = useDrop<{ id: number }, unknown, { isOver: boolean }>(() => ({
         accept: "task",
         drop: () => { console.log(id) },
         collect: monitor => ({
-            isOver: !!monitor.isOver()
-        })
+            isOver: !!monitor.isOver() && !!monitor.canDrop(),
+        }),
+        canDrop: (item, monitor) => item.id != id
     }), [id])
 
     const [{ isTaskHover }, dummyDrop] = useDrop(() => ({
@@ -50,7 +51,7 @@ export default function TaskTree({ id, title, priority, limitAt, completed, subt
         collect: monitor => ({
             isTaskHover: !!monitor.isOver()
         })
-    }), [id])
+    }))
 
     useEffect(() => {
         if(opened) {
