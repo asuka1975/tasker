@@ -38,20 +38,20 @@ export default function TaskTree({ id, title, priority, limitAt, completed, subt
 
     const [{ isOver }, drop] = useDrop<{ id: number }, unknown, { isOver: boolean }>(() => ({
         accept: "task",
-        drop: () => { console.log(id) },
+        drop: (item) => {
+            fetch(`/api/v1/task/${item.id}`, {
+                method: "PUT",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({ parentId: id })
+            })
+        },
         collect: monitor => ({
             isOver: !!monitor.isOver() && !!monitor.canDrop(),
         }),
         canDrop: (item, monitor) => item.id != id
     }), [id])
-
-    const [{ isTaskHover }, dummyDrop] = useDrop(() => ({
-        accept: "task",
-        drop: () => { },
-        collect: monitor => ({
-            isTaskHover: !!monitor.isOver()
-        })
-    }))
 
     useEffect(() => {
         if(opened) {
@@ -64,26 +64,23 @@ export default function TaskTree({ id, title, priority, limitAt, completed, subt
 
     useEffect(() => {
         const deferedOpen = async () => {
-            if(!isTaskHover) return;
+            if(!isOver) return;
             await new Promise(resolve => setTimeout(resolve, 1000));
-            if(isTaskHover) {
+            if(isOver) {
                 setOpened(true);
             }
         }
         deferedOpen();
-    }, [isTaskHover])
+    })
 
     return (
         <div className="">
             <div className="grid grid-cols-[0.5em_1fr_0.5em] items-center gap-2" >
                 { subtasks.length > 0 ? <div className={opened ? "transition rotate-90 duration-100" : ""} onClick={() => { setOpened(v => !v) }}><Marker /></div> : <></> }
-                <div className="col-start-2" ref={dummyDrop}>
+                <div className={`col-start-2 ${isOver ? "bg-gray-200" : "bg-white"}`} ref={drop}>
                     <DraggableTaskItem id={id} title={title} priority={priority} limitAt={limitAt} completed={completed}></DraggableTaskItem>
                 </div>
                 <TaskItemContextMenu id={id} />
-            </div>
-            <div ref={drop} className={`w-full h-1 ${isOver ? "bg-gray-200" : "bg-white"}`}>
-
             </div>
             {opened ?
                 <div className="transition pl-[0.5em] duration-100">

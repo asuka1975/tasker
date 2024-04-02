@@ -21,6 +21,7 @@ export const taskInputSchema = z.object({
 })
 
 export const taskUpdateSchema = z.object({
+    parentId: z.number(),
     title: z.string().optional(),
     description: z.string().optional(),
     priority: z.number().min(0, "優先度は０より小さくできません").max(8, "優先度は８より大きくできません").optional(),
